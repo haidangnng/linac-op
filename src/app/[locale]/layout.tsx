@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import "../globals.css";
-import DashboardLayout from "@/components/dashboard-layout";
 import { locales } from "@/lib/constants/locales";
+import MainLayout from "@/components/main-layout";
 
 const inter = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
@@ -33,7 +33,7 @@ export default function LocaleLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <DashboardLayout>{children}</DashboardLayout>
+          <MainLayout>{children}</MainLayout>
         </ThemeProvider>
       </body>
     </html>

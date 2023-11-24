@@ -1,4 +1,5 @@
 import CustomTable from "@/components/custom-table";
+import { PatientFilter } from "@/components/patients/filter-patients";
 import { ColumnDef } from "@tanstack/react-table";
 
 export default function PatientPage() {
@@ -12,7 +13,8 @@ export default function PatientPage() {
   ];
 
   return (
-    <div>
+    <div className="w-full">
+      <PatientFilter />
       <CustomTable data={data} columns={columns} loading={false} />
     </div>
   );
