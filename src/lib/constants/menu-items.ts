@@ -16,8 +16,7 @@ const menuItems: MenuItemType[] = [
     icon: User,
   },
   {
-    // label: "Rút tiền",
-    label: "withdraw",
+    label: "patients",
     target: ROUTES.PATIENTS,
     icon: Users2,
   },

@@ -23,27 +23,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Loader2 } from "lucide-react";
-// import PaginationFooter from "../PaginationFooter";
-// import { PaginationType } from "@/lib/types/table";
+import PaginationFooter from "./pagination-footer";
 
 type CustomTableType<T> = {
   data: Array<T>;
+  total: number;
   columns: ColumnDef<T>[];
   exportable?: boolean;
   onPaginate?: (offset: number) => void;
-  // pagination?: PaginationType;
   loading: boolean;
   onRowClick?: (row: T) => void;
 };
 
 export default function CustomTable<T>({
-  exportable,
   data,
   columns,
   onPaginate,
-  // pagination,
   loading,
   onRowClick,
+  total,
 }: CustomTableType<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -73,7 +71,7 @@ export default function CustomTable<T>({
   });
 
   return (
-    <div className="overflow-y-scroll relative md:w-full w-[380px]">
+    <div className="relative md:w-full w-[380px]">
       {loading && (
         <div className="flex absolute top-0 right-0 bottom-0 left-0 z-50 justify-center items-center opacity-50 bg-background">
           <Loader2 className="mr-2 w-4 h-4 animate-spin" />
@@ -134,14 +132,9 @@ export default function CustomTable<T>({
           </TableBody>
         </Table>
 
-        {/* {pagination && onPaginate && ( */}
-        {/*   <PaginationFooter */}
-        {/*     pagination={pagination} */}
-        {/*     className="mt-6" */}
-        {/*     exportable={exportable} */}
-        {/*     onPaginate={onPaginate} */}
-        {/*   /> */}
-        {/* )} */}
+        {total && onPaginate && (
+          <PaginationFooter total={total} onPaginate={onPaginate} />
+        )}
       </div>
     </div>
   );

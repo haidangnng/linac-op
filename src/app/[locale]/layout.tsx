@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import "../globals.css";
 import { locales } from "@/lib/constants/locales";
+import { Toaster } from "@/components/ui/toaster";
 import MainLayout from "@/components/main-layout";
 
 const inter = Noto_Sans({ weight: "400", subsets: ["latin"] });
@@ -34,6 +35,7 @@ export default function LocaleLayout({
           disableTransitionOnChange
         >
           <MainLayout>{children}</MainLayout>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
