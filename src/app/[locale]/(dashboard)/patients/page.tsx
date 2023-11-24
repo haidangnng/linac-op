@@ -61,14 +61,14 @@ export default function PatientPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const [patientList, setPatientList] = useState<UserType[]>([]);
-  const [total, setTotal] = useState<number>(0);
 
-  const handleFetchTotalPatients = useCallback(async () => {
+  const handleFetchPatients = useCallback(async () => {
+    setLoading(true);
     const supabase = createSupabaseBrowerClient();
 
-    const { count, error } = await supabase
+    const { data, error } = await supabase
       .from("profile")
-      .select("*", { count: "exact", head: true })
+      .select("*", { count: "exact" })
       .eq("role", USER_ROLE.PATIENT);
 
     if (error) {
@@ -77,57 +77,18 @@ export default function PatientPage() {
       });
     }
 
-    setTotal(count || 0);
+    setLoading(false);
+    setPatientList(data || []);
   }, [toast]);
 
-  const handleFetchPatients = useCallback(
-    async (offset: number) => {
-      const supabase = createSupabaseBrowerClient();
-
-      const { data, error } = await supabase
-        .from("profile")
-        .select("*", { count: "exact" })
-        .eq("role", USER_ROLE.PATIENT)
-        .range(offset || 0, offset + 9);
-
-      if (error) {
-        toast({
-          title: "There's something wrong",
-        });
-      }
-
-      setPatientList(data || []);
-    },
-    [toast],
-  );
-
   useEffect(() => {
-    setLoading(true);
-    Promise.all([handleFetchTotalPatients(), handleFetchPatients(0)]).then(
-      () => {
-        setLoading(false);
-      },
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handlePagination = useCallback(
-    (offset: number) => {
-      handleFetchPatients(offset);
-    },
-    [handleFetchPatients],
-  );
+    handleFetchPatients();
+  }, [handleFetchPatients]);
 
   return (
     <div className="w-full">
       <PatientFilter />
-      <CustomTable
-        total={total}
-        data={patientList}
-        onPaginate={handlePagination}
-        columns={columns}
-        loading={loading}
-      />
+      <CustomTable data={patientList} columns={columns} loading={loading} />
     </div>
   );
 }

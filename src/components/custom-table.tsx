@@ -23,11 +23,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Loader2 } from "lucide-react";
-import PaginationFooter from "./pagination-footer";
+import { Button } from "./ui/button";
 
 type CustomTableType<T> = {
   data: Array<T>;
-  total: number;
   columns: ColumnDef<T>[];
   exportable?: boolean;
   onPaginate?: (offset: number) => void;
@@ -38,10 +37,8 @@ type CustomTableType<T> = {
 export default function CustomTable<T>({
   data,
   columns,
-  onPaginate,
   loading,
   onRowClick,
-  total,
 }: CustomTableType<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -131,10 +128,30 @@ export default function CustomTable<T>({
             )}
           </TableBody>
         </Table>
-
-        {total && onPaginate && (
-          <PaginationFooter total={total} onPaginate={onPaginate} />
-        )}
+      </div>
+      <div className="flex justify-end items-center py-4 space-x-2">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
