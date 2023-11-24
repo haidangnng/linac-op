@@ -1,7 +1,7 @@
-import BasicInformation from "@/components/profile/basic-information";
-import ContactInformation from "@/components/profile/contact-information";
 import { getProfile } from "./actions";
 import { UserType } from "@/lib/types/UserType";
+import BasicInformation from "./components/basic-information";
+import ContactInformation from "./components/contact-information";
 
 export default async function ProfilePage() {
   const data: UserType = await getProfile();

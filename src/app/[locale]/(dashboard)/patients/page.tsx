@@ -1,6 +1,6 @@
 "use client";
 import CustomTable from "@/components/custom-table";
-import { PatientFilter } from "@/components/patients/filter-patients";
+import { PatientFilter } from "./components/filter-patients";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 import createSupabaseBrowerClient from "@/lib/supabase/client";

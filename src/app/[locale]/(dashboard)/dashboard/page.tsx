@@ -1,4 +1,4 @@
-import Appointments from "@/components/dashboard/appointments";
+import Appointments from "./components/appointments";
 
 export default function DashboardPage() {
   return (
